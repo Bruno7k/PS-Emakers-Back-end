@@ -1,4 +1,4 @@
-# PS-Emakers-Back-end
+# PS-Emakers-Back-End
 ## Projeto de back para o processo trainee
 ![Captura de tela 2024-04-19 194708](https://github.com/Bruno7k/PS-Emakers-back-end/assets/106875572/67e3ac68-2da5-4242-9f8f-aabf1ef2924e)
 ## O sistema deverá conter estes requisitos mínimos:

@@ -1,5 +1,6 @@
 # PS-Emakers-Back-End
 ## Projeto de back para o processo trainee
+Minha tarefa é criar uma Api-Rest utilizando o framework Spring Boot, nesta aplicação será necessário criar um crud para livro e pessoa. A aplicação deverá seguir o seguinte modelo de dados, sendo que, você pode se sentir livre para incrementar algum atributo no seu sistema.
 ![Captura de tela 2024-04-19 194708](https://github.com/Bruno7k/PS-Emakers-back-end/assets/106875572/67e3ac68-2da5-4242-9f8f-aabf1ef2924e)
 ## O sistema deverá conter estes requisitos mínimos:
  - Aplicação base em Spring Boot

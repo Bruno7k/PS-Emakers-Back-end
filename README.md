@@ -2,7 +2,7 @@
 
 ## Descrição
 Minha tarefa é criar uma Api-Rest utilizando o framework Spring Boot, nesta aplicação será necessário criar um crud para livro e pessoa. A aplicação deverá seguir o seguinte modelo de dados:
-![Captura de tela 2024-04-19 194708](https://github.com/Bruno7k/PS-Emakers-back-end/assets/106875572/67e3ac68-2da5-4242-9f8f-aabf1ef2924e)
+![324133642-71391ea5-91fa-4a17-943b-ba31a25831be](https://github.com/Bruno7k/PS-Emakers-back-end/assets/106875572/5701ac88-d0ac-4ff9-a42c-9b9f78b2aaf0)
 ## O sistema deverá conter estes requisitos mínimos:
  - Aplicação base em Spring Boot
  - Código mantido no GitHub

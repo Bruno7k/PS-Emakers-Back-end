@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collection;
+
 @Getter
 @Setter
 @Entity
@@ -15,10 +17,15 @@ public class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idPessoa;
+
     @Column(name="nome", nullable = false, length = 80)
     private String nome;
+
     @Column(name="cep", nullable = false, length = 9)
     private String cep;
+
+    @ManyToMany(mappedBy = "pessoas")
+    private Collection<Livro> livros;
 
     @Builder
     public Pessoa(PessoaRequestDto pessoaRequestDto) {

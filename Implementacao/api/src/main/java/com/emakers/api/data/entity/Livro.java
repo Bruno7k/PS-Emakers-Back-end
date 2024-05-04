@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.Collection;
 import java.util.Date;
 
@@ -28,6 +27,9 @@ public class Livro {
     @Column(name = "data_lancamento", nullable = false)
     private Date data_lancamento;
 
+    @Column(name= "quantidade_disponivel", nullable = false)
+    private int quantidade_disponivel;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "Emprestimo",
@@ -41,5 +43,6 @@ public class Livro {
         this.nome = livroRequestDto.nome();
         this.autor = livroRequestDto.autor();
         this.data_lancamento = livroRequestDto.data_lancamento();
+        this.quantidade_disponivel = livroRequestDto.quantidade_disponivel();
     }
 }

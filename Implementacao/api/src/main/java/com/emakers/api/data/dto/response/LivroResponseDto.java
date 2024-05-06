@@ -14,10 +14,10 @@ public record LivroResponseDto(
 
         Date data,
 
-        int quantidade_disponivel
+        int quantidade
 ) {
     public LivroResponseDto(Livro livro) {
-        this(livro.getIdLivro(), livro.getNome(), livro.getAutor(), livro.getData_lancamento(), livro.getQuantidade_disponivel());
+        this(livro.getIdLivro(), livro.getNome(), livro.getAutor(), livro.getData_lancamento(), livro.getQuantidade());
     }
 
 }

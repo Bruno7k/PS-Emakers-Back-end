@@ -3,6 +3,7 @@ package com.emakers.api.service;
 import com.emakers.api.data.dto.request.PessoaRequestDto;
 import com.emakers.api.data.dto.response.PessoaResponseDto;
 import com.emakers.api.data.entity.Pessoa;
+import com.emakers.api.exception.general.EntityNotFoundException;
 import com.emakers.api.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,7 @@ public class PessoaService {
     }
 
     private Pessoa getPessoaByID(Long idPessoa){
-        return pessoaRepository.findById(idPessoa).orElseThrow(()-> new RuntimeException("A pessoa requisitada nao existe ou nao foi cadastrada ainda"));
+        return pessoaRepository.findById(idPessoa).orElseThrow(()-> new EntityNotFoundException(idPessoa));
 
     }
 

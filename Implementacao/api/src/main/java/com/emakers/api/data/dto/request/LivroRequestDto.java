@@ -1,17 +1,22 @@
 package com.emakers.api.data.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.Date;
 
 public record LivroRequestDto(
-        @NotBlank(message = "O nome do livro nao pode estar vazio")
+
+        @NotBlank
+        @Size(min = 2, max = 45)
         String nome,
-        @NotBlank(message = "O nome do autor nao pode estar vazio")
+        @NotBlank
+        @Size(min = 2, max = 45)
         String autor,
-        @NotBlank(message= "Digite a data de lancamento do livro")
+        @NotNull
         Date data_lancamento,
-        @NotBlank(message = "A quantidade nao pode estar vazia")
-        int quantidade_disponivel
+        @NotNull
+        int quantidade
 ) {
 }

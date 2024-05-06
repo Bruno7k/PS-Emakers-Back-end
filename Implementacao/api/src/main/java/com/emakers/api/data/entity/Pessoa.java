@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Collection;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -25,7 +24,7 @@ public class Pessoa {
     private String cep;
 
     @ManyToMany(mappedBy = "pessoas")
-    private Collection<Livro> livros;
+    private Set<Livro> livros;
 
     @Builder
     public Pessoa(PessoaRequestDto pessoaRequestDto) {

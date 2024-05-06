@@ -1,12 +1,14 @@
 package com.emakers.api.data.entity;
 import com.emakers.api.data.dto.request.LivroRequestDto;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,9 +16,13 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "Livro")
 public class Livro {
+    public interface CreateLivro{}
+    public interface UpdateLivro{}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idLivro;
+
 
     @Column(name="nome", nullable = false, length = 45)
     private String nome;
@@ -27,8 +33,8 @@ public class Livro {
     @Column(name = "data_lancamento", nullable = false)
     private Date data_lancamento;
 
-    @Column(name= "quantidade_disponivel", nullable = false)
-    private int quantidade_disponivel;
+    @Column(name= "quantidade", nullable = false)
+    private int quantidade;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -36,13 +42,13 @@ public class Livro {
             joinColumns = @JoinColumn(name = "idLivro"),
             inverseJoinColumns = @JoinColumn(name = "idPessoa")
     )
-    private Collection<Pessoa> pessoas;
+    private Set<Pessoa> pessoas;
 
     @Builder
     public Livro(LivroRequestDto livroRequestDto) {
         this.nome = livroRequestDto.nome();
         this.autor = livroRequestDto.autor();
         this.data_lancamento = livroRequestDto.data_lancamento();
-        this.quantidade_disponivel = livroRequestDto.quantidade_disponivel();
+        this.quantidade = livroRequestDto.quantidade();
     }
 }

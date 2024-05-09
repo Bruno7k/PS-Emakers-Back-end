@@ -1,14 +1,13 @@
 package com.emakers.api.data.entity;
 import com.emakers.api.data.dto.request.LivroRequestDto;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -16,8 +15,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "Livro")
 public class Livro {
-    public interface CreateLivro{}
-    public interface UpdateLivro{}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +39,7 @@ public class Livro {
             joinColumns = @JoinColumn(name = "idLivro"),
             inverseJoinColumns = @JoinColumn(name = "idPessoa")
     )
-    private Set<Pessoa> pessoas;
+    private List<Pessoa> pessoas;
 
     @Builder
     public Livro(LivroRequestDto livroRequestDto) {
@@ -51,4 +48,5 @@ public class Livro {
         this.data_lancamento = livroRequestDto.data_lancamento();
         this.quantidade = livroRequestDto.quantidade();
     }
+
 }

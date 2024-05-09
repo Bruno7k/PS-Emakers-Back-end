@@ -1,7 +1,6 @@
-package com.emakers.api.exception.general;
+package com.emakers.api.exception.authentication;
 
 import com.emakers.api.exception.RestErrorMessage;
-import jakarta.persistence.EntityExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,14 +11,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
-public class GeneralExceptionHandler{
-
-    @ExceptionHandler(EntityNotFoundException.class)
-    private ResponseEntity<RestErrorMessage> entityNotFoundHandler(EntityNotFoundException exception){
+public class AuthenticationExceptionHandler {
+    @ExceptionHandler(IncorrectPasswordException.class)
+    private ResponseEntity<RestErrorMessage> incorrectPassword(IncorrectPasswordException exception){
         RestErrorMessage errorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
         return ResponseEntity.status(errorMessage.status()).body(errorMessage);
     }
-
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    private ResponseEntity<RestErrorMessage> emailExist(EmailAlreadyExistsException exception){
+        RestErrorMessage errorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(errorMessage.status()).body(errorMessage);
+    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     private ResponseEntity<List<RestErrorMessage>> methodArgumentNotValidHandler(MethodArgumentNotValidException exception){
         List<RestErrorMessage> errorMessages = exception.getBindingResult().getFieldErrors()

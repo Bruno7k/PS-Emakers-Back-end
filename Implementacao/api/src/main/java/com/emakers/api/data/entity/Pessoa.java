@@ -5,13 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -36,7 +30,7 @@ public class Pessoa{
     private String cep;
 
     @ManyToMany(mappedBy = "pessoas")
-    private Set<Livro> livros;
+    private List<Livro> livros;
 
     @Builder
     public Pessoa(PessoaRequestDto pessoaRequestDto) {

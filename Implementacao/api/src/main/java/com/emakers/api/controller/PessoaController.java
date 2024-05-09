@@ -4,7 +4,6 @@ import com.emakers.api.data.dto.request.LoginRequestDto;
 import com.emakers.api.data.dto.request.PessoaRequestDto;
 import com.emakers.api.data.dto.response.LoginResponseDto;
 import com.emakers.api.data.dto.response.PessoaResponseDto;
-import com.emakers.api.data.entity.Pessoa;
 import com.emakers.api.infra.security.TokenService;
 import com.emakers.api.repository.PessoaRepository;
 import com.emakers.api.service.PessoaService;
@@ -14,8 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/pessoa")
@@ -33,35 +32,14 @@ public class PessoaController {
     private TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequestDto loginRequestDto){
-        Pessoa pessoa = this.pessoaRepository.findByEmail(loginRequestDto.email()).orElseThrow(() -> new RuntimeException("Pessoa nao encontrada"));
-        if(passwordEncoder.matches(loginRequestDto.senha(), pessoa.getSenha())){
-            String token = tokenService.generateToken(pessoa);
-            return ResponseEntity.ok(new LoginResponseDto(pessoa.getNome(), token));
-        }
-        return ResponseEntity.badRequest().build();
+    public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid LoginRequestDto loginRequestDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.login(loginRequestDto));
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<PessoaResponseDto> register(@Valid @RequestBody PessoaRequestDto pessoaRequestDto){
+   @PostMapping("/register")
+    public ResponseEntity<LoginResponseDto> register(@Valid @RequestBody PessoaRequestDto pessoaRequestDto){
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.register(pessoaRequestDto));
     }
-
- /*   @PostMapping("/register")
-    public ResponseEntity<LoginResponseDto> register(@RequestBody PessoaRequestDto pessoaRequestDto){
-        Optional<Pessoa> pessoa = this.pessoaRepository.findByEmail(pessoaRequestDto.email());
-        if(pessoa.isEmpty()) {
-            Pessoa novaPessoa = new Pessoa();
-            novaPessoa.setEmail(pessoaRequestDto.email());
-            novaPessoa.setSenha(passwordEncoder.encode(pessoaRequestDto.senha()));
-            novaPessoa.setNome(pessoaRequestDto.nome());
-            novaPessoa.setCep(pessoaRequestDto.cep());
-            this.pessoaRepository.save(novaPessoa);
-            String token = tokenService.generateToken(novaPessoa);
-            return ResponseEntity.ok(new LoginResponseDto(novaPessoa.getNome(), token));
-        }
-        return ResponseEntity.badRequest().build();
-    }*/
 
     @GetMapping(value = "/all")
     public ResponseEntity<List<PessoaResponseDto>> getAllPessoas() {

@@ -8,15 +8,15 @@ import java.util.Date;
 
 public record LivroRequestDto(
 
-        @NotBlank
-        @Size(min = 2, max = 45)
+        @NotBlank(message = "O nome nao pode estar vazio")
+        @Size(min = 2, max = 45, message = "O nome deve ter entre 2 e 45 caracteres")
         String nome,
-        @NotBlank
-        @Size(min = 2, max = 45)
+        @NotBlank(message = "O autor nao pode estar vazio")
+        @Size(min = 2, max = 45, message = "O nome deve ter entre 2 e 45 caracteres")
         String autor,
-        @NotNull
+        @NotNull(message = "A data nao pode esstar nula")
         Date data_lancamento,
-        @NotNull
+        @NotNull(message = "A quantidade nao pode ser nula")
         int quantidade
 ) {
 }

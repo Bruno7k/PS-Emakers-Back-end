@@ -39,7 +39,7 @@ public class LivroController {
         return ResponseEntity.status(HttpStatus.OK).body(livroService.getAllLivros());
     }
 
-    @Operation(summary = "Lista um livros",
+    @Operation(summary = "Lista um livro",
             description = "Lista um livro de acordo com seu respectivo id",
             tags = {"Livro"},
             responses = {
@@ -94,7 +94,7 @@ public class LivroController {
     }
 
 
-    @Operation(summary = "Deleta um livros",
+    @Operation(summary = "Deleta um livro",
             description = "Deleta um livro de acordo com seu respectivo id",
             tags = {"Livro"},
             responses = {

@@ -28,14 +28,6 @@ public class PessoaController {
     @Autowired
     private PessoaService pessoaService;
 
-    @Autowired
-    private PessoaRepository pessoaRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private TokenService tokenService;
 
     @Operation(summary = "Faz o login da pessoa no sistema",
             description = "Faz o login com o email e senha da pessoa",

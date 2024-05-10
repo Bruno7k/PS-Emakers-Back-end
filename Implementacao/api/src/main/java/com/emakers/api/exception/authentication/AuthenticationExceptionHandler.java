@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class AuthenticationExceptionHandler {
     @ExceptionHandler(IncorrectPasswordException.class)
-    private ResponseEntity<RestErrorMessage> incorrectPassword(IncorrectPasswordException exception){
+    private ResponseEntity<RestErrorMessage> incorrectPasswordHandler(IncorrectPasswordException exception){
         RestErrorMessage errorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
         return ResponseEntity.status(errorMessage.status()).body(errorMessage);
     }
     @ExceptionHandler(EmailAlreadyExistsException.class)
-    private ResponseEntity<RestErrorMessage> emailExist(EmailAlreadyExistsException exception){
+    private ResponseEntity<RestErrorMessage> emailExistHandler(EmailAlreadyExistsException exception){
         RestErrorMessage errorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
         return ResponseEntity.status(errorMessage.status()).body(errorMessage);
     }

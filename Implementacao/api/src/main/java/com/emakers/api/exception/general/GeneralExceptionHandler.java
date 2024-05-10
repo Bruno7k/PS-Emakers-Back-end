@@ -27,4 +27,10 @@ public class GeneralExceptionHandler{
                 .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessages);
     }
+
+    @ExceptionHandler(OperationNotAllowed.class)
+    private ResponseEntity<RestErrorMessage> operationNotAllowedHandler(OperationNotAllowed exception){
+        RestErrorMessage errorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(errorMessage.status()).body(errorMessage);
+    }
 }

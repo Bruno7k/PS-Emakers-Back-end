@@ -8,6 +8,7 @@ import com.emakers.api.data.entity.Pessoa;
 import com.emakers.api.exception.authentication.EmailAlreadyExistsException;
 import com.emakers.api.exception.general.EntityNotFoundException;
 import com.emakers.api.exception.authentication.IncorrectPasswordException;
+import com.emakers.api.exception.general.OperationNotAllowed;
 import com.emakers.api.infra.security.TokenService;
 import com.emakers.api.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,21 +42,28 @@ public class PessoaService {
 
 
     public PessoaResponseDto updatePessoa(Long idPessoa, PessoaRequestDto pessoaRequestDto){
+        Optional<Pessoa> aux = pessoaRepository.findByEmail(pessoaRequestDto.email());
+        if(aux.isEmpty()) {
+            Pessoa pessoa = getPessoaByID(idPessoa);
+            pessoa.setEmail(pessoaRequestDto.email());
+            pessoa.setSenha(passwordEncoder.encode(pessoaRequestDto.senha()));
+            pessoa.setNome(pessoaRequestDto.nome());
+            pessoa.setCep(pessoaRequestDto.cep());
+            pessoaRepository.save(pessoa);
+            return new PessoaResponseDto(pessoa);
+        }
+        throw new EmailAlreadyExistsException();
+    }
+
+    public String deletePessoa(Long idPessoa) {
         Pessoa pessoa = getPessoaByID(idPessoa);
-        pessoa.setEmail(pessoaRequestDto.email());
-        pessoa.setSenha(pessoaRequestDto.senha());
-        pessoa.setNome(pessoaRequestDto.nome());
-        pessoa.setCep(pessoaRequestDto.cep());
-        pessoaRepository.save(pessoa);
-        return new PessoaResponseDto(pessoa);
+        if (pessoa.getLivros().isEmpty()) {
+            pessoaRepository.delete(pessoa);
+            return "A pessoa com id: " + idPessoa + " foi removida com sucesso";
+        }else{
+            throw new OperationNotAllowed();
+        }
     }
-
-    public String deletePessoa(Long idPessoa){
-        Pessoa pessoa = getPessoaByID(idPessoa);;
-        pessoaRepository.delete(pessoa);
-        return "A pessoa com id: " + idPessoa + " foi removida com sucesso";
-    }
-
     public LoginResponseDto register(PessoaRequestDto pessoaRequestDto){
         Optional<Pessoa> aux = pessoaRepository.findByEmail(pessoaRequestDto.email());
         if(aux.isEmpty()) {

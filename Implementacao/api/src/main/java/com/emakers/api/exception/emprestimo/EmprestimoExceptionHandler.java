@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class EmprestimoExceptionHandler {
     @ExceptionHandler(LoanNotAllowedException.class)
-    private ResponseEntity<RestErrorMessage> loanNotAllowed(LoanNotAllowedException exception){
+    private ResponseEntity<RestErrorMessage> loanNotAllowedHandler(LoanNotAllowedException exception){
         RestErrorMessage errorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
         return ResponseEntity.status(errorMessage.status()).body(errorMessage);
     }

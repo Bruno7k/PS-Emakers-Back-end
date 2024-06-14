@@ -66,7 +66,7 @@ public class PessoaController {
     }
 
     @Operation(summary = "Lista todas as pessoas",
-            description = "Lista todas as pessoas que foram cadatradas",
+            description = "Lista todas as pessoas que foram cadastradas",
             tags = {"Pessoa"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
@@ -113,7 +113,7 @@ public class PessoaController {
     @PutMapping(value = "/update/{idPessoa}",
             produces = "application/json",
             consumes = "application/json")
-    public ResponseEntity<PessoaResponseDto> updatePessoa(@PathVariable long idPessoa,@Valid @RequestBody PessoaRequestDto pessoaRequestDto) {
+    public ResponseEntity<LoginResponseDto> updatePessoa(@PathVariable long idPessoa,@Valid @RequestBody PessoaRequestDto pessoaRequestDto) {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.updatePessoa(idPessoa, pessoaRequestDto));
     }
 

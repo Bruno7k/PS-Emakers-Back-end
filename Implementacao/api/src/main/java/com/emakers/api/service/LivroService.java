@@ -50,31 +50,25 @@ public class LivroService {
             return new LivroResponseDto(livro);
         }
     }
-
-    public boolean livroExiste(Livro livro, LivroRequestDto livroRequestDto){
-        Optional<Livro> aux = livroRepository.findByNome(livroRequestDto.nome());
-        if(aux.isEmpty() || (!Objects.equals(aux.get().getAutor(), livro.getAutor()))) {
-            livroRepository.save(livro);
-            return false;
-        }
-        else{
-            return true;
-        }
+    public boolean livroExiste(Livro livro, LivroRequestDto livroRequestDto) {
+        Optional<Livro> auxLivro = livroRepository.findByNomeAndAutor(livroRequestDto.nome(), livroRequestDto.autor());
+        return auxLivro.isPresent() && !Objects.equals(auxLivro.get().getIdLivro(), livro.getIdLivro());
     }
 
-    public LivroResponseDto updateLivro(Long idLivro, LivroRequestDto livroRequestDto){
+
+    public LivroResponseDto updateLivro(Long idLivro, LivroRequestDto livroRequestDto) {
         Livro livro = getLivroById(idLivro);
-        if(livroExiste(livro, livroRequestDto)){
+        if (livroExiste(livro, livroRequestDto)) {
             throw new LivroAlreadyExistsException();
-        }else {
-            if (livro.getPessoas().isEmpty()){
+        } else {
+            if (livro.getPessoas().isEmpty()) {
                 livro.setNome(livroRequestDto.nome());
                 livro.setAutor(livroRequestDto.autor());
                 livro.setData_lancamento(livroRequestDto.data_lancamento());
                 livro.setQuantidade(livroRequestDto.quantidade());
                 livroRepository.save(livro);
                 return new LivroResponseDto(livro);
-            }else{
+            } else {
                 throw new OperationNotAllowed();
             }
         }
@@ -124,6 +118,5 @@ public class LivroService {
             throw new LoanNotAllowedException(idLivro, 0);
         }
     }
-    //public List<Pessoa> listarEmprestimos(){}
 
 }

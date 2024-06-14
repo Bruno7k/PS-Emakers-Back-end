@@ -41,16 +41,18 @@ public class PessoaService {
     }
 
 
-    public PessoaResponseDto updatePessoa(Long idPessoa, PessoaRequestDto pessoaRequestDto){
+    public LoginResponseDto updatePessoa(Long idPessoa, PessoaRequestDto pessoaRequestDto){
         Optional<Pessoa> aux = pessoaRepository.findByEmail(pessoaRequestDto.email());
-        if(aux.isEmpty()) {
-            Pessoa pessoa = getPessoaByID(idPessoa);
+        Pessoa pessoa = getPessoaByID(idPessoa);
+        Long idAux = aux.get().getIdPessoa();
+        if(idAux == pessoa.getIdPessoa()) {
             pessoa.setEmail(pessoaRequestDto.email());
             pessoa.setSenha(passwordEncoder.encode(pessoaRequestDto.senha()));
             pessoa.setNome(pessoaRequestDto.nome());
             pessoa.setCep(pessoaRequestDto.cep());
-            pessoaRepository.save(pessoa);
-            return new PessoaResponseDto(pessoa);
+            this.pessoaRepository.save(pessoa);
+            String token = tokenService.generateToken(pessoa);
+            return new LoginResponseDto(pessoa.getEmail(), token);
         }
         throw new EmailAlreadyExistsException();
     }
@@ -83,7 +85,7 @@ public class PessoaService {
         Pessoa pessoa = pessoaRepository.findByEmail(loginRequestDto.email()).orElseThrow(() -> new RuntimeException("Pessoa nao encontrada"));
         if(passwordEncoder.matches(loginRequestDto.senha(), pessoa.getSenha())){
             String token = tokenService.generateToken(pessoa);
-            return new LoginResponseDto(pessoa.getNome(), token);
+            return new LoginResponseDto(pessoa.getEmail(), token);
         }
         throw new IncorrectPasswordException();
     }

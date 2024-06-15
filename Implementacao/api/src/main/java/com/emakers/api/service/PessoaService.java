@@ -82,7 +82,7 @@ public class PessoaService {
     }
 
     public LoginResponseDto login(LoginRequestDto loginRequestDto){
-        Pessoa pessoa = pessoaRepository.findByEmail(loginRequestDto.email()).orElseThrow(() -> new RuntimeException("Pessoa nao encontrada"));
+        Pessoa pessoa = pessoaRepository.findByEmail(loginRequestDto.email()).orElseThrow(() -> new EntityNotFoundException(loginRequestDto.email()));
         if(passwordEncoder.matches(loginRequestDto.senha(), pessoa.getSenha())){
             String token = tokenService.generateToken(pessoa);
             return new LoginResponseDto(pessoa.getEmail(), token);

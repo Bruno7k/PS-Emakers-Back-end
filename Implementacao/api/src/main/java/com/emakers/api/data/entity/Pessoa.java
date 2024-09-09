@@ -1,5 +1,6 @@
 package com.emakers.api.data.entity;
 import com.emakers.api.data.dto.request.PessoaRequestDto;
+import com.emakers.api.data.dto.response.EnderecoResponseDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,15 +30,33 @@ public class Pessoa{
     @Column(name="cep", nullable = false, length = 9)
     private String cep;
 
+    @Column(name="logradouro", length = 255)
+    private String logradouro;
+
+    @Column(name="bairro", length = 255)
+    private String bairro;
+
+    @Column(name="cidade", length = 255)
+    private String cidade;
+
+    @Column(name="uf", length = 2)
+    private String uf;
+
+
     @ManyToMany(mappedBy = "pessoas")
     private List<Livro> livros;
 
     @Builder
-    public Pessoa(PessoaRequestDto pessoaRequestDto) {
+    public Pessoa(PessoaRequestDto pessoaRequestDto, EnderecoResponseDto enderecoDto) {
         this.email = pessoaRequestDto.email();
         this.senha = pessoaRequestDto.senha();
         this.nome = pessoaRequestDto.nome();
         this.cep = pessoaRequestDto.cep();
+        this.logradouro = enderecoDto.logradouro();
+        this.bairro = enderecoDto.bairro();
+        this.cidade = enderecoDto.localidade();
+        this.uf = enderecoDto.uf();
     }
+
 
 }

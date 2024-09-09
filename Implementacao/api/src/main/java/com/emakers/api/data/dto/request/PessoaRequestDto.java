@@ -19,7 +19,7 @@ public record PessoaRequestDto(
         String nome,
 
         @NotBlank(message = "O cep nao pode estar vazio")
-        @Size(min=9, max = 9, message = "O cep e invalido")
+        @Size(min=8, max = 8, message = "O cep e invalido")
         String cep
 ) {
 }

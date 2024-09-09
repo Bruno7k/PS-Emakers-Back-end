@@ -29,4 +29,9 @@ public class AuthenticationExceptionHandler {
                 .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessages);
     }
+    @ExceptionHandler(CepNotExistsException.class)
+    private ResponseEntity<RestErrorMessage> cepNotExistsHandler(CepNotExistsException exception){
+        RestErrorMessage errorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(errorMessage.status()).body(errorMessage);
+    }
 }

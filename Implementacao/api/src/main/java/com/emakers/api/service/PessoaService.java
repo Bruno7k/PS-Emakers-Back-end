@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.emakers.api.data.dto.response.EnderecoResponseDto;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -103,7 +104,7 @@ public class PessoaService {
 //        }
 //        throw new EmailAlreadyExistsException();
 //    }
-    public LoginResponseDto register(PessoaRequestDto pessoaRequestDto) {
+    public LoginResponseDto register(PessoaRequestDto pessoaRequestDto) throws IOException {
         Optional<Pessoa> aux = pessoaRepository.findByEmail(pessoaRequestDto.email());
         if (aux.isEmpty()) {
             EnderecoResponseDto enderecoDto = cepConsumerFeign.getCEP(pessoaRequestDto.cep());
@@ -121,9 +122,10 @@ public class PessoaService {
             pessoa.setUf(enderecoDto.uf());
             this.pessoaRepository.save(pessoa);
             String token = tokenService.generateToken(pessoa);
-            emailService.enviarEmailTexto(pessoaRequestDto.email(),
-                    "Novo usuario cadastro com sucesso",
-                    "Voce esta recebendo um email de cadastro na biblioteca do Bruno");
+//            emailService.enviarEmailTexto(pessoaRequestDto.email(),
+//                    "Novo usuario cadastro com sucesso",
+//                    "Voce esta recebendo um email de cadastro na biblioteca do Bruno");
+            //emailService.enviarEmailTexto(pessoaRequestDto.email(), pessoaRequestDto.nome());
             return new LoginResponseDto(pessoa.getEmail(), token);
         }
 

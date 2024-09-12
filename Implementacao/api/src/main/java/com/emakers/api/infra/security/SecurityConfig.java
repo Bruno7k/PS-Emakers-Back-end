@@ -35,6 +35,8 @@ public class SecurityConfig{
                                 "/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.POST, "/pessoa/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/pessoa/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/upload").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/email/enviar").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

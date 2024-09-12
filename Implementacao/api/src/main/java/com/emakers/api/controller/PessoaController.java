@@ -19,6 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "Pessoa", description = "Endpoints relacionados à área de pessoa")
@@ -61,7 +63,7 @@ public class PessoaController {
    @PostMapping(value = "/register",
            produces = "application/json",
            consumes = "application/json")
-    public ResponseEntity<LoginResponseDto> register(@Valid @RequestBody PessoaRequestDto pessoaRequestDto){
+    public ResponseEntity<LoginResponseDto> register(@Valid @RequestBody PessoaRequestDto pessoaRequestDto) throws IOException {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.register(pessoaRequestDto));
     }
 

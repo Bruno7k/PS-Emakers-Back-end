@@ -18,8 +18,7 @@ public class ArquivoService {
     @Autowired
     private EmailService emailService;
 
-    private static final String diretorioPasta = "C:\\Users\\Bruno\\Documents\\PS-Emakers-Back-end\\Implementacao\\api\\src\\main\\resources\\static\\images";
-
+    private static final String diretorioPasta = System.getProperty("user.dir") + File.separator + "Implementacao" + File.separator + "api" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "images";
     public void salvarArquivo(String titulo, String texto, MultipartFile arquivoSalvo) throws IOException {
         if(arquivoSalvo == null){
             throw new NullPointerException(" O arquivo e nullo");
@@ -29,7 +28,6 @@ public class ArquivoService {
             throw new ServiceException("O nome do arquivo nao e suportado");
         }
         Files.copy(arquivoSalvo.getInputStream(), arquivoAlvo.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
         emailService.nomeFoto(titulo, texto, arquivoAlvo.getName());
     }
 }

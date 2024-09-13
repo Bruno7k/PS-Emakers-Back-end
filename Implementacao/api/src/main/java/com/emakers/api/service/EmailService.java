@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-
+import java.nio.file.Paths;
 
 
 @Service
@@ -38,12 +38,13 @@ public class EmailService {
     //    }
 
     private String imagem6, titulo, texto;
+    private static final String diretorioPasta = System.getProperty("user.dir") + File.separator + "Implementacao" + File.separator + "api" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "images";
     public void nomeFoto(String titulo, String texto, String caminho) {
         imagem6 = caminho;
         this.titulo = titulo;
         this.texto = texto;
     }
-
+    String baseDir = Paths.get("src", "main", "resources", "static", "images").toString();
     public String enviarEmailTexto()throws IOException {
         try{
             MimeMessage message = mailSender.createMimeMessage();
@@ -58,12 +59,12 @@ public class EmailService {
             template = template.replace("#{titulo}", titulo);
             template = template.replace("#{texto}", texto);
             helper.setText(template, true);
-            helper.addInline("image1", new File("C:\\Users\\Bruno\\Documents\\PS-Emakers-Back-end\\Implementacao\\api\\src\\main\\resources\\static\\images\\image-1.png"));
-            helper.addInline("image2", new File("C:\\Users\\Bruno\\Documents\\PS-Emakers-Back-end\\Implementacao\\api\\src\\main\\resources\\static\\images\\image-2.png"));
-            helper.addInline("image3", new File("C:\\Users\\Bruno\\Documents\\PS-Emakers-Back-end\\Implementacao\\api\\src\\main\\resources\\static\\images\\image-3.png"));
-            helper.addInline("image4", new File("C:\\Users\\Bruno\\Documents\\PS-Emakers-Back-end\\Implementacao\\api\\src\\main\\resources\\static\\images\\image-4.png"));
-            helper.addInline("image5", new File("C:\\Users\\Bruno\\Documents\\PS-Emakers-Back-end\\Implementacao\\api\\src\\main\\resources\\static\\images\\image-5.png"));
-            helper.addInline("image6", new File("C:\\Users\\Bruno\\Documents\\PS-Emakers-Back-end\\Implementacao\\api\\src\\main\\resources\\static\\images\\" + imagem6));
+            helper.addInline("image1", new File(diretorioPasta + File.separator + "image-1.png"));
+            helper.addInline("image2", new File(diretorioPasta + File.separator + "image-2.png"));
+            helper.addInline("image3", new File(diretorioPasta + File.separator + "image-3.png"));
+            helper.addInline("image4", new File(diretorioPasta + File.separator + "image-4.png"));
+            helper.addInline("image5", new File(diretorioPasta + File.separator + "image-5.png"));
+            helper.addInline("image6", new File(diretorioPasta + File.separator + imagem6));
             mailSender.send(message);
             return "Email enviado com sucesso!";
         }catch (Exception e){
